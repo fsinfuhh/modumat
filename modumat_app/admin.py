@@ -1,3 +1,5 @@
 from django.contrib import admin
+from modumat_app.models import Module
 
-# Register your models here.
+
+admin.site.register(Module)
