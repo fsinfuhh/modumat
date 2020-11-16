@@ -1,11 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ requested_question.title }}</title>
-</head>
-<body>
-    <h1>{{ requested_question.title }}</h1>
-    <p>{{ requested_question.full_question }}</p>
-</body>
-</html>
+{% extends 'modumat_app/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                {% for q in all_questions %}
+                    <svg width=".5em" height=".5em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card" style="height: 600px">
+            <div class="card-body">
+                <h1 class="card-title">{{ requested_question.title }}</h1>
+                <p class="card-text">{{ requested_question.full_question }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
