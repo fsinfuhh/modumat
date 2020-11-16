@@ -1,0 +1,8 @@
+.wizard-link {
+    color: #888888;
+}
+
+.wizard-link:hover {
+    text-decoration: none;
+    color: #000;
+}
