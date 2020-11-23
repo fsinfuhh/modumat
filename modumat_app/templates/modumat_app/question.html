@@ -5,9 +5,15 @@
             <div class="col text-center">
                 {% for q in all_questions %}
                     <a class="wizard-link" href="/question/{{ q.id }}">
+                    {% if q.pk == requested_question.pk %}
+                        <svg width=".5em" height=".5em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="black" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                    {% else %}
                         <svg width=".5em" height=".5em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="8" cy="8" r="8"/>
                         </svg>
+                    {% endif %}
                     </a>
                 {% endfor %}
             </div>
