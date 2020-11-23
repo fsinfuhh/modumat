@@ -10,5 +10,6 @@ def question(request, question_id: int):
     return render(request, 'modumat_app/question.html',
                   {
                       'requested_question': requested_question,
+                      'next_question': requested_question.pk + 1, #TODO: Replace with actual next question
                       'all_questions': all_questions
                   })
