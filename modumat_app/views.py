@@ -3,6 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Question
 
 
+def welcome(request):
+    return render(request, 'modumat_app/welcome.html')
+
+
 def question(request, question_id: int):
     requested_question = get_object_or_404(Question, pk=question_id)
     all_questions = Question.objects.all()
