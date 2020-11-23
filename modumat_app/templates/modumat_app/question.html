@@ -17,7 +17,8 @@
             <div class="card-body d-flex flex-column">
                 <h1 class="card-title">{{ requested_question.title }}</h1>
                 <p class="card-text">{{ requested_question.full_question }}</p>
-                <form action="/answer/{{ requested_question.pk }}?nextquestion={{ next_question }}" method="post" class="mt-auto ml-auto">
+                <form action="/answer/{{ requested_question.pk }}?next_question={{ next_question }}" method="post" class="mt-auto ml-auto">
+                    {% csrf_token %}
                     <button type="submit" name="approval" value="-1" class="btn btn-secondary">Stimme nicht zu</button>
                     <button type="submit" name="approval" value="0" class="btn btn-secondary">Neutral</button>
                     <button type="submit" name="approval" value="1" class="btn btn-secondary">Stimme zu</button>

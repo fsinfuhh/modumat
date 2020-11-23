@@ -1,5 +1,4 @@
-from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Question
 
@@ -13,3 +12,9 @@ def question(request, question_id: int):
                       'next_question': requested_question.pk + 1, #TODO: Replace with actual next question
                       'all_questions': all_questions
                   })
+
+
+def answer(request, question_id):
+    request.session[question_id] = request.POST['approval']
+    next_question_id = request.GET["next_question"]
+    return redirect(f"/question/{next_question_id}", permanent=False)
