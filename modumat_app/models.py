@@ -24,6 +24,12 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    def next_question(self):
+        following_questions = Question.objects.filter(pk__gt=self.pk).order_by('pk')
+        if len(following_questions) > 0:
+            return following_questions[0]
+        return None
+
 
 class ModuleAnswer(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
