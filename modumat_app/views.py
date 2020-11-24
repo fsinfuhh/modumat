@@ -12,20 +12,19 @@ def question(request, question_id: int):
     all_questions = Question.objects.all()
     next_page_results = (requested_question.next_question() is None)
 
-    if next_page_results:
-        return render(request, 'modumat_app/question.html',
-                      {
-                          'requested_question': requested_question,
-                          'all_questions': all_questions,
-                          'next_page_results': next_page_results,
-                      })
+    next_question_pk = None
+    if not next_page_results:
+        next_question_pk = requested_question.next_question().pk
+
+    given_answer = request.session.get(str(requested_question.pk), None)
 
     return render(request, 'modumat_app/question.html',
                   {
                       'requested_question': requested_question,
-                      'next_question': requested_question.next_question().pk,
+                      'next_question': next_question_pk,
                       'all_questions': all_questions,
                       'next_page_results': next_page_results,
+                      'given_answer': given_answer,
                   })
 
 

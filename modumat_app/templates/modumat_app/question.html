@@ -29,9 +29,21 @@
                 <form action="/answer/{{ requested_question.pk }}?next=/question/{{ next_question }}" method="post" class="mt-auto ml-auto">
                 {% endif %}
                     {% csrf_token %}
-                    <button type="submit" name="approval" value="-1" class="btn btn-secondary">Stimme nicht zu</button>
-                    <button type="submit" name="approval" value="0" class="btn btn-secondary">Neutral</button>
-                    <button type="submit" name="approval" value="1" class="btn btn-secondary">Stimme zu</button>
+                    {% if given_answer != '-1' %}
+                        <button type="submit" name="approval" value="-1" class="btn btn-secondary">Stimme nicht zu</button>
+                    {% else %}
+                        <button type="submit" name="approval" value="-1" class="btn btn-dark">Stimme nicht zu</button>
+                    {% endif %}
+                    {% if given_answer != '0' %}
+                        <button type="submit" name="approval" value="0" class="btn btn-secondary">Neutral</button>
+                    {% else %}
+                        <button type="submit" name="approval" value="0" class="btn btn-dark">Neutral</button>
+                    {% endif %}
+                    {% if given_answer != '1' %}
+                        <button type="submit" name="approval" value="1" class="btn btn-secondary">Stimme zu</button>
+                    {% else %}
+                        <button type="submit" name="approval" value="1" class="btn btn-dark">Stimme zu</button>
+                    {% endif %}
                 </form>
             </div>
         </div>
