@@ -9,6 +9,8 @@ ANSWER_OPTIONS = (
 
 
 class Module(models.Model):
+    """University course
+    """
     shorthand = models.CharField(max_length=20)
     module_name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
@@ -18,6 +20,8 @@ class Module(models.Model):
 
 
 class Question(models.Model):
+    """Question or statement that is answered by the user or a Module
+    """
     title = models.CharField(max_length=50)
     full_question = models.CharField(max_length=200)
 
@@ -32,6 +36,8 @@ class Question(models.Model):
 
 
 class ModuleAnswer(models.Model):
+    """Answer for a given Question by one Module
+    """
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.IntegerField(choices=ANSWER_OPTIONS)
