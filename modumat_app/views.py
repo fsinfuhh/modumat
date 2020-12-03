@@ -50,3 +50,12 @@ def answer(request, question_id):
     request.session[question_id] = request.POST['approval']
     next_url = request.GET["next"]
     return redirect(f"{next_url}", permanent=False)
+
+
+def results(request):
+    """Shows a results page with recommended modules
+
+    :param request:
+    :return:
+    """
+    return render(request, 'modumat_app/results.html', {})
