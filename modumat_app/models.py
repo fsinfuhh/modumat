@@ -18,6 +18,17 @@ class Module(models.Model):
     def __str__(self):
         return f"{self.shorthand}: {self.module_name}"
 
+    def calculateAgreementPoints(self, session):
+        """Returns an integer representing the degree of agreement between user and module
+        """
+        agreement_points = 0
+        all_module_answers = ModuleAnswer.objects.filter(module=self.pk)
+        for module_answer in all_module_answers:
+            if str(module_answer.question.pk) in session:
+                agreement_points += 2 - abs(module_answer.answer - int(session[str(module_answer.question.pk)]))
+
+        return agreement_points
+
 
 class Question(models.Model):
     """Question or statement that is answered by the user or a Module

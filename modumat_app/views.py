@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Question
+from .models import Question, Module
 
 
 def welcome(request):
@@ -58,4 +58,16 @@ def results(request):
     :param request:
     :return:
     """
-    return render(request, 'modumat_app/results.html', {})
+
+    agreement_points = []
+    max_agreement_points = Question.objects.count() * 2
+
+    for module in Module.objects.all():
+        agreement = module.calculateAgreementPoints(request.session)
+        percentage = int(agreement / max_agreement_points * 100)
+        agreement_points.append((module, agreement, percentage))
+
+    return render(request, 'modumat_app/results.html', {
+        'module_agreement': agreement_points,
+        'max_agreements_points': max_agreement_points,
+    })

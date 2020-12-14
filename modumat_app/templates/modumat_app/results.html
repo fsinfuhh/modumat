@@ -4,10 +4,17 @@
         <div class="card" style="height: 600px">
             <div class="card-body d-flex flex-column">
                 <h1 class="card-title">Ergebnisse</h1>
-                <p class="card-text">This is a default text.</p>
-                <div class="mt-auto ml-auto">
-                    <!--a href="/question/1" class="btn btn-secondary">Start</a-->
-                </div>
+                <p class="card-text">
+                    {% for module, agreement, percentage in module_agreement %}
+                        <p>
+                            {{ module.module_name }}: {{ percentage }}%
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%" aria-valuenow="{{ agreement }}" aria-valuemin="0" aria-valuemax="{{ max_agreements_points }}"></div>
+                            </div>
+                        </p>
+                    {% endfor %}
+                </p>
+                <div class="mt-auto ml-auto"></div>
             </div>
         </div>
     </div>
