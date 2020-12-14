@@ -67,6 +67,8 @@ def results(request):
         percentage = int(agreement / max_agreement_points * 100)
         agreement_points.append((module, agreement, percentage))
 
+    agreement_points.sort(key=lambda m: m[1], reverse=True)
+
     return render(request, 'modumat_app/results.html', {
         'module_agreement': agreement_points,
         'max_agreements_points': max_agreement_points,
