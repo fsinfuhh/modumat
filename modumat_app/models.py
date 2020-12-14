@@ -53,5 +53,10 @@ class ModuleAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.IntegerField(choices=ANSWER_OPTIONS)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['module', 'question'], name='unique_module_answer')
+        ]
+
     def __str__(self):
         return f"{self.question.title} - {self.module.shorthand}: {ANSWER_OPTIONS[self.answer+1][1]}"
