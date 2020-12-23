@@ -9,7 +9,10 @@ def welcome(request):
     :param request:
     :return:
     """
-    return render(request, 'modumat_app/welcome.html')
+    first_question_id = Question.objects.order_by('pk').first().pk
+    return render(request, 'modumat_app/welcome.html', {
+        'first_question_id': first_question_id,
+    })
 
 
 def question(request, question_id: int):
