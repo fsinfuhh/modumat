@@ -5,12 +5,15 @@
             <div class="card-body d-flex flex-column">
                 <h1 class="card-title">Ergebnisse</h1>
                 <p class="card-text">
-                    {% for module, agreement, percentage in module_agreement %}
+                    {% for module, agreement, percentage, module_answers_and_own_answers in module_agreement %}
                         <p>
                             {{ module.module_name }}: {{ percentage }}%
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%" aria-valuenow="{{ agreement }}" aria-valuemin="0" aria-valuemax="{{ max_agreements_points }}"></div>
                             </div>
+                            {% for module_answer, own_answer in module_answers_and_own_answers %}
+                                <p>{{ module_answer.question.title }}: {{ module_answer.answer }} - {{ own_answer }}</p>
+                            {% endfor %}
                         </p>
                     {% endfor %}
                 </p>

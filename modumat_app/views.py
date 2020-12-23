@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Question, Module
+from .models import Question, Module, ModuleAnswer
 
 
 def welcome(request):
@@ -65,7 +65,9 @@ def results(request):
     for module in Module.objects.all():
         agreement = module.calculateAgreementPoints(request.session)
         percentage = int(agreement / max_agreement_points * 100)
-        agreement_points.append((module, agreement, percentage))
+        module_answers_and_own_answers = [(i, request.session[str(i.question.pk)]) for i in ModuleAnswer.objects.filter(module = module.pk)]
+        own_answers = request.session
+        agreement_points.append((module, agreement, percentage, module_answers_and_own_answers))
 
     agreement_points.sort(key=lambda m: m[1], reverse=True)
 
