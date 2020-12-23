@@ -1,19 +1,61 @@
 {% extends 'modumat_app/base.html' %}
 {% block content %}
     <div class="container">
-        <div class="card" style="height: 600px">
+        <div class="card" style="min-height: 600px">
             <div class="card-body d-flex flex-column">
                 <h1 class="card-title">Ergebnisse</h1>
                 <p class="card-text">
                     {% for module, agreement, percentage, module_answers_and_own_answers in module_agreement %}
                         <p>
-                            {{ module.module_name }}: {{ percentage }}%
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%" aria-valuenow="{{ agreement }}" aria-valuemin="0" aria-valuemax="{{ max_agreements_points }}"></div>
+                            <div class="row" data-toggle="collapse" href="#moduleAnswers{{module.pk}}" role="button" aria-expanded="false" aria-controls="moduleAnswers{{module.pk}}">
+                                <div class="col-sm">
+                                    {{ module.module_name }}: {{ percentage }}%
+                                </div>
+                                <div class="col-8">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%" aria-valuenow="{{ agreement }}" aria-valuemin="0" aria-valuemax="{{ max_agreements_points }}"></div>
+                                    </div>
+                                </div>
                             </div>
-                            {% for module_answer, own_answer in module_answers_and_own_answers %}
-                                <p>{{ module_answer.question.title }}: {{ module_answer.answer }} - {{ own_answer }}</p>
-                            {% endfor %}
+                            <div class="collapse" id="moduleAnswers{{module.pk}}">
+                                <div class="row">
+                                    <div class="col-sm"></div>
+                                    <div class="col-8">
+                                        <table class="table">
+                                    <thead>
+                                        <th>Frage</th>
+                                        <th style="text-align: center;">Modulantwort</th>
+                                        <th style="text-align: center;">Deine Antwort</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for module_answer, own_answer in module_answers_and_own_answers %}
+                                            <tr>
+                                                <td>{{ module_answer.question.title }}</td>
+                                                <td style="text-align: center;">
+                                                    {% if module_answer.answer == 1 %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path style="fill: green;" fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12zm16.28-2.72a.75.75 0 00-1.06-1.06l-5.97 5.97-2.47-2.47a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l6.5-6.5z"></path></svg>
+                                                    {% elif module_answer.answer == -1 %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path style="fill: red;" fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12zm8.036-4.024a.75.75 0 00-1.06 1.06L10.939 12l-2.963 2.963a.75.75 0 101.06 1.06L12 13.06l2.963 2.964a.75.75 0 001.061-1.06L13.061 12l2.963-2.964a.75.75 0 10-1.06-1.06L12 10.939 9.036 7.976z"></path></svg>
+                                                    {% else %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="42" height="42"><path style="fill: dodgerblue;" d="M12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg>
+                                                    {% endif %}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    {% if own_answer == '1' %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path style="fill: green;" fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12zm16.28-2.72a.75.75 0 00-1.06-1.06l-5.97 5.97-2.47-2.47a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l6.5-6.5z"></path></svg>
+                                                    {% elif own_answer == '-1' %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path style="fill: red;" fill-rule="evenodd" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12zm8.036-4.024a.75.75 0 00-1.06 1.06L10.939 12l-2.963 2.963a.75.75 0 101.06 1.06L12 13.06l2.963 2.964a.75.75 0 001.061-1.06L13.061 12l2.963-2.964a.75.75 0 10-1.06-1.06L12 10.939 9.036 7.976z"></path></svg>
+                                                    {% else %}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="42" height="42"><path style="fill: dodgerblue;" d="M12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                    </div>
+                                </div>
+                            </div>
                         </p>
                     {% endfor %}
                 </p>
