@@ -68,8 +68,7 @@ def results(request):
     for module in Module.objects.all():
         agreement = module.calculateAgreementPoints(request.session)
         percentage = int(agreement / max_agreement_points * 100)
-        module_answers_and_own_answers = [(i, request.session.get(str(i.question.pk), default=None)) for i in ModuleAnswer.objects.filter(module = module.pk)]
-        own_answers = request.session
+        module_answers_and_own_answers = [(i, request.session.get(str(i.question.pk), default=None)) for i in ModuleAnswer.objects.filter(module=module.pk)]
         agreement_points.append((module, agreement, percentage, module_answers_and_own_answers))
 
     agreement_points.sort(key=lambda m: m[1], reverse=True)
