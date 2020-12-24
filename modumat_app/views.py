@@ -68,7 +68,7 @@ def results(request):
     for module in Module.objects.all():
         agreement = module.calculateAgreementPoints(request.session)
         percentage = int(agreement / max_agreement_points * 100)
-        module_answers_and_own_answers = [(i, request.session[str(i.question.pk)]) for i in ModuleAnswer.objects.filter(module = module.pk)]
+        module_answers_and_own_answers = [(i, request.session.get(str(i.question.pk), default=None)) for i in ModuleAnswer.objects.filter(module = module.pk)]
         own_answers = request.session
         agreement_points.append((module, agreement, percentage, module_answers_and_own_answers))
 
